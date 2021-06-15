@@ -81,7 +81,7 @@ sprintf("%f is the median of total steps", median(totals$total_steps, na.rm=TRUE
 avgs <- data %>% 
     group_by(interval) %>% 
     summarise(avg_steps = mean(steps, na.rm = TRUE)) 
-ggplot(data=avgs, aes(interval, avg_steps)) + geom_line()
+ggplot(data=avgs, aes(interval, avg_steps)) + geom_line(color="blue")
 ```
 
 ![](PA1_template_files/figure-html/unnamed-chunk-4-1.png)<!-- -->
@@ -176,7 +176,10 @@ sprintf("imputing resulted in a median of %f more steps per day", (median(itotal
 ```r
 tmp <- mutate(itotals, day=ifelse(weekdays(date, abbreviate=TRUE) %in% c("Mon","Tue","Wed","Thu","Fri"), "weekday", "weekend"))
 ggplot(data=tmp, aes(x=date, y=imputed_total_steps)) +
-     geom_histogram(stat="identity", aes(fill=factor(day)))
+  geom_line(color="blue", size=1) +
+  geom_point(color="steelblue") +
+  labs(title = "Total steps per day weekday vs weekend", y="Total steps", x="date") +
+  facet_grid(day ~ .)
 ```
 
 ![](PA1_template_files/figure-html/unnamed-chunk-9-1.png)<!-- -->
